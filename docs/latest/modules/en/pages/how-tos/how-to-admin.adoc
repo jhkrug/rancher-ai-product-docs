@@ -402,6 +402,7 @@ Use the following settings:
 | **Auth Type** | `Basic authentication`
 | **Secret** | Create a secret using your username and the API key from Step 1.
 | **Human Validation Tools** | none
+| **Agent Profile** | SUSE-Application-Collection Agent is an AI assistant that provides information about applications available in the Rancher Application Collection. It can answer questions about application versions, CVE scans, SBOMs, and other relevant information. Answers question like How to replace high-vulnerability community images with hardened SUSE equivalents? How to access the SBOM and latest CVE scan results for a specific AppCo container image? How to configure deployment parameters using the official AppCo Helm chart documentation? How to verify if a specific application version meets enterprise security compliance standards?
 | **Guidelines** | SUSE Application Collection Agent ## Role & Persona You are the SUSE Application Collection (AppCo) Agent, an elite technical specialist in secure software supply chains. Your mission is to assist users in discovering, vetting, and deploying curated, hardened cloud-native applications. You act as the bridge between user requirements and the SUSE repository of near-zero CVE (Common Vulnerabilities and Exposures) images.
   You have access to the following specialized toolset: - ApplicationCollection_search_applications: Find applications by name, category, or keyword. - ApplicationCollection_get_application_details: Retrieve metadata, available versions, architecture support, and registry paths. - ApplicationCollection_get_helm_chart_documentation: Access deployment instructions and configuration parameters. - ApplicationCollection_get_container_image_documentation: Access detailed usage guides for specific images.
   ## Core Directives Security First: Every interaction must emphasize the security posture of the application. If a user asks for an application, don't just find it—confirm its hardened status. Verifiable Integrity: Always offer or provide the SBOM (Software Bill of Materials) and CVE scan results. Do not take security for granted; prove it with data. Version Precision: Never guess versions. Use the tools to identify the exact Latest or Stable tags and mention the underlying base image (e.g., BCI/SLES) when available. Zero-Trust Guidance: If a user requests an outdated version, gently advise them of the security risks and point them toward the most recent, patched version in the collection. ##Example: Complete Investigation Example: Comparative Investigation & Migration When a user provides details about an existing deployment (e.g., "I'm currently running the standard library/postgres:15 image. How does it compare to AppCo, and how do I switch?") The Agent should: 1 Analyze Current State: Acknowledge the user's current image and its typical vulnerability profile (e.g., standard community images often carry 50+ vulnerabilities due to bloated base layers). 2 Search AppCo: Use ApplicationCollection_search_applications to find the equivalent PostgreSQL entry. 3 Cross-Reference Security: Use ApplicationCollection_get_application_details to pull the CVE count and base image info (e.g., BCI-Minimal). 4 Compare & Contrast: Present a clear comparison. 5 Migration Path: Provide the technical steps to switch. Example Response Structure: "I’ve analyzed your current postgres:15 image. Typically, the community version carries multiple 'Medium' and 'High' CVEs because it includes many OS utilities you likely don't need in production. Comparison: \| Feature \| Current (Community) \| SUSE AppCo Equivalent \| \| :--- \| :--- \| :--- \| \| Vulnerabilities \| ~50-100 (estimated) \| 0 Critical / 0 High \| \| Base Image \| Debian/Alpine \| SUSE Linux Enterprise BCI \| \| SBOM \| Not standard \| Available (CycloneDX/SPDX) \|
@@ -482,6 +483,82 @@ SUSE Security::
 --
 Coming Soon...
 --
+CloudCasa::
++
+--
+The **CloudCasa Agent** extends {short-project-name} with data protection workflows for Kubernetes. This allows users to get guided help for backup, restore, and cross-cluster migration tasks directly from the AI Assistant.
+
+**Configuration Steps:**
+
+1.  **Get Credentials:** Visit the link:https://docs.cloudcasa.io/help/index.html[CloudCasa Documentation] to retrieve your MCP server credentials (username and password).
+2.  **Navigate to Settings:** Go to **Global Settings** > **AI Assistant**.
+3.  **Add Agent:** Click **Add AI Agent** and input the following:
+
+[cols="1,3"]
+|===
+| Setting | Value
+| **Name** | `CloudCasa`
+| **Agent Profile** | `CloudCasa data protection assistant for Kubernetes. Manages backup, restore, and cross-cluster migration operations including snapshot backups, offload copies to object storage, cross-cluster restores, and protection policy management.`
+| **Endpoint** | https://cloudcasa-mcp.vercel.app
+| **Auth Type** | `Basic authentication`
+| **Secret** | Click **Create Secret** directly in the form and enter the credentials obtained in Step 1.
+| **Human Validation Tools** | `cc_create_snapshot_backup`, `cc_create_copy_backup`, `cc_create_restore`
+| **Guidelines** | Use this agent only for CloudCasa-related operations. Prefer read-only guidance first, then propose an action. Require human validation before any operation that creates, changes, restores, migrates, or deletes protected resources. Ask for clarification when parameters are ambiguous. Never invent cluster names or recovery points. Summarize the intended action before execution. Do not execute restore or migration actions unless the user explicitly confirms source and destination.
+|===
+
+**Programmatic Installation:**
+Alternatively, apply this `AIAgentConfig` YAML to your local cluster:
+
+[source,yaml]
+----
+apiVersion: ai.cattle.io/v1alpha1
+kind: AIAgentConfig
+metadata:
+  name: cloudcasa
+  namespace: cattle-ai-agent-system
+spec:
+  authenticationType: BASIC
+  authenticationSecret: cloudcasa-auth-secret
+  builtIn: false
+  description: >-
+    CloudCasa data protection assistant for Kubernetes. Manages backup, restore, and cross-cluster migration operations.
+  displayName: CloudCasa
+  enabled: true
+  mcpURL: https://cloudcasa-mcp.vercel.app
+  systemPrompt: >-
+    Use this agent only for CloudCasa-related operations. Prefer read-only guidance first, then propose an action. Require human validation before any operation that creates, changes, restores, migrates, or deletes protected resources. Ask for clarification when the cluster, namespace, backup target, restore destination, or retention intent is ambiguous. Never invent cluster names, namespaces, storage classes, schedules, credentials, or recovery points. Summarize the intended action before execution and confirm expected impact. Do not execute restore or migration actions unless the user explicitly confirms source and destination.
+----
+
+**Testing and Validation:**
+
+After saving the configuration, test the assistant using the following suggested prompts:
+
+**Informational Prompts (Read-Only):**
+[source,text]
+----
+Show me what CloudCasa can help me do.
+List the types of backup and restore operations available through CloudCasa.
+Explain the difference between snapshot backup and copy backup.
+What information do you need before creating a restore?
+----
+
+**Action-Gated Prompts (Requires Human Validation):**
+[source,text]
+----
+Create a snapshot backup for namespace <namespace> on cluster <cluster>.
+----
+
+**Troubleshooting:**
+
+* **Authentication Errors:** Verify the secret created in the form contains the correct credentials from the CloudCasa portal.
+* **Agent Unresponsive:** Confirm the agent is "Enabled" and the endpoint is reachable. For detailed troubleshooting, visit the link:https://docs.cloudcasa.io/help/index.html[CloudCasa Documentation].
+* **Missing Approval Prompts:** Ensure the tool names in the **Human Validation Tools** list are entered exactly as specified.
+
+[NOTE]
+=====
+For further technical support or advanced configuration, please visit the official link:https://docs.cloudcasa.io/help/index.html[CloudCasa Documentation].
+=====
+--
 ====
 
 [#bring-your-own-mcp]
@@ -490,6 +567,12 @@ Coming Soon...
 You can extend {short-project-name}'s "crew" by adding your own custom **Model Context Protocol (MCP)** server.
 
 This is ideal for integrating proprietary data or specialized internal tools directly into the AI assistant.
+
+[NOTE]
+=====
+This feature requires a MCP server that supports **Streamable HTTP**.
+If you are using Server-Sent Events (SSE), please switch to a streamable HTTP configuration to connect your external MCP.
+=====
 
 **Configuration Steps:**
 
@@ -502,10 +585,12 @@ This is ideal for integrating proprietary data or specialized internal tools dir
 | Field | Description
 | **Name** | The identifying name for your Agent.
 | **Agent Profile** | A clear summary of the Agent's purpose. **Include example prompts**, as {short-project-name} uses this description to route user requests to the correct Agent.
-| **Endpoint** | The accessible URL of your MCP server.
+| **Endpoint** | The accessible URL of your MCP server + 
+**Note**: The server must support Streamable HTTP.
 | **Authentication Type** | Choose between **Rancher Authentication** (internal), **Basic Authentication**, or **None**. _(OAuth2 support coming soon)._
 | **Human Validation Tools** | Select specific tools that require explicit user confirmation before {short-project-name} executes them.
-| **Guidelines** | Provide the system prompt (instructions) for the agent. See xref:how-tos/how-to-admin.adoc#multi-agent[Multi-Agent Configuration] for examples.
+| **Guidelines** | Provide the system prompt (instructions) for the agent. + 
+See xref:how-tos/how-to-admin.adoc#multi-agent[Multi-Agent Configuration] for examples.
 |===
 
 [#rbac]
