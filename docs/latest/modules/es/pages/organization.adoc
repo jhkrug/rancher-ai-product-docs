@@ -1,0 +1,5 @@
+include::partial$variables.adoc[]
+= Organización de la documentación
+:revdate: 2025-11-25
+:page-revdate: {revdate}
+:description: ¿Cómo está {project-name} organizada la documentación?

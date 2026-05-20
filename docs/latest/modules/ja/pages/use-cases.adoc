@@ -1,0 +1,6 @@
+include::partial$variables.adoc[]
+
+= {project-name}の使用例
+:revdate: 2026-01-23
+:page-revdate: {revdate}
+:description: の特定のユースケースの説明{project-name}です。
