@@ -10,10 +10,7 @@ include::partial$variables.adoc[]
 
 {short-project-name} includes a persistent AI assistant named **Liz**. You can open the assistant at any time by clicking the **Liz icon** image:liz-button.png[Liz button, width=48] in the UI.
 
-When you open the side panel, Liz greets you with suggestions based on your current page context. During a conversation, Liz provides:
-
-* **Two suggested actions** to continue the current workflow.
-* **One exploratory action** to learn more about related topics.
+When you open the side panel, Liz greets you with a welcome message containing tips, a short news letter, and a list of suggestions to get you started (see xref:/how-tos/how-to-admin.adoc#ui-tools[ui-tools] section).
 
 image::chat-panel.png[Liz chat panel., align="center",  width="50%"]
 
