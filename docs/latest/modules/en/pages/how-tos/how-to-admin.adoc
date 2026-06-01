@@ -446,7 +446,7 @@ spec:
 SUSE Observability::
 +
 --
-The **SUSE-Observability** agent helps you gather metric, traces and logs from your SUSE-Observability installation and clusters.
+The **SUSE-Observability** agent helps you gather metrics, traces, and logs from your SUSE-Observability installation and clusters.
 
 **Pre-requisites:**
 
