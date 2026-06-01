@@ -551,7 +551,7 @@ spec:
     observability information about clusters, pods and application. Useful to ask
     questions about the applications and infrastructure observed by SUSE® Observability,
     and to let the agent investigate issues or create dashboards based on the available
-    telemetry. \nExample of prompts: \n- Give me a top 5 of resource usage in namespace
+    telemetry. \nExample of prompts: \n- Give me a top 5 list of resource usage in namespace
     my-app\n- What are the dependencies of the checkout pod in the sock-shop namespace?\n-
     Is there anything in a critical state?\n- Create a dashboard for the most important
     metrics of my checkout service"
