@@ -484,7 +484,7 @@ Use the following settings:
 | **Human Validation Tools** | none
 | **Agent Profile** | SUSE Observability Agent part of Liz's crew. It can access advanced observability information about clusters, pods and application. Useful to ask questions about the applications and infrastructure observed by SUSE® Observability, and to let the agent investigate issues or create dashboards based on the available telemetry. 
 Example of prompts: 
-- Give me a top 5 of resource usage in namespace my-app
+- Give me a top 5 list of resource usage in namespace my-app
 - What are the dependencies of the checkout pod in the sock-shop namespace?
 - Is there anything in a critical state?
 - Create a dashboard for the most important metrics of my checkout service
