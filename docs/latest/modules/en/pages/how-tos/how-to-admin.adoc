@@ -161,7 +161,7 @@ Navigate to the ‘Global Settings’ -> ‘AI Assistant’ tab.
 ====
 
 Choose a model that supports Tools call. Currently the **Anthropic Claude
-Opus** model has been tested. 
+Opus** model has been tested.
 The list of tested models is available in the xref:/explanations/models.adoc[Models] documentation.
 
 ====
@@ -198,9 +198,9 @@ kubectl rollout restart deployment -n cattle-ai-agent-system rancher-ai-agent
 [#multi-agent]
 == Multi Agent configuration
 
-Extend {short-project-name}’s capabilities by configuring specialized AI Agents. 
+Extend {short-project-name}’s capabilities by configuring specialized AI Agents.
 
-These agents allow {short-project-name} to handle specific domains such as GitOps, Cluster Provisioning areas (CAPI resources, K3k), Security and Observability. 
+These agents allow {short-project-name} to handle specific domains such as GitOps, Cluster Provisioning areas (CAPI resources, K3k), Security and Observability.
 
 {short-project-name} Liz is deployed with 3 built-in AI agents by default:
 
@@ -213,7 +213,7 @@ These agents allow {short-project-name} to handle specific domains such as GitOp
 SUSE Rancher-Fleet::
 +
 --
-By default, {short-project-name} deploys this built-in Agent. 
+By default, {short-project-name} deploys this built-in Agent.
 
 Optimise tokens usage, or tailor the user experience for GitOps by deploying a dedicated **Fleet Agent**.
 
@@ -287,7 +287,7 @@ spec:
 SUSE Rancher-Provisioning::
 +
 --
-By default, {short-project-name} deploys this built-in Agent. 
+By default, {short-project-name} deploys this built-in Agent.
 
 Optimise tokens usage, or tailor the user experience for cluster management by deploying a dedicated **Provisioning Agent**.
 
@@ -371,7 +371,7 @@ The **Application Collection Agent** helps you discover hardened, secure images 
 
 image:ai-agent-suse-appco.png[SUSE Application Collection AI Agent]
 
-Use the following settings: 
+Use the following settings:
 
 [cols="1,3"]
 |===
@@ -626,7 +626,7 @@ The **CloudCasa Agent** extends {short-project-name} with data protection workfl
 | Setting | Value
 | **Name** | `CloudCasa`
 | **Agent Profile** | `CloudCasa data protection assistant for Kubernetes. Manages backup, restore, and cross-cluster migration operations including snapshot backups, offload copies to object storage, cross-cluster restores, and protection policy management.`
-| **Endpoint** | https://cloudcasa-mcp.vercel.app
+| **Endpoint** | \https://cloudcasa-mcp.vercel.app
 | **Auth Type** | `Basic authentication`
 | **Secret** | Click **Create Secret** directly in the form and enter the credentials obtained in Step 1.
 | **Human Validation Tools** | `cc_create_snapshot_backup`, `cc_create_copy_backup`, `cc_create_restore`
@@ -712,11 +712,11 @@ If you are using Server-Sent Events (SSE), please switch to a streamable HTTP co
 | Field | Description
 | **Name** | The identifying name for your Agent.
 | **Agent Profile** | A clear summary of the Agent's purpose. **Include example prompts**, as {short-project-name} uses this description to route user requests to the correct Agent.
-| **Endpoint** | The accessible URL of your MCP server + 
+| **Endpoint** | The accessible URL of your MCP server +
 **Note**: The server must support Streamable HTTP.
 | **Authentication Type** | Choose between **Rancher Authentication** (internal), **Basic Authentication**, or **None**. _(OAuth2 support coming soon)._
 | **Human Validation Tools** | Select specific tools that require explicit user confirmation before {short-project-name} executes them.
-| **Guidelines** | Provide the system prompt (instructions) for the agent. + 
+| **Guidelines** | Provide the system prompt (instructions) for the agent. +
 See xref:how-tos/how-to-admin.adoc#multi-agent[Multi-Agent Configuration] for examples.
 |===
 
@@ -770,7 +770,7 @@ We provide a specific **Global Role**, {short-project-name} (Rancher AI Assistan
 ====
 This Global role provide a very limited access to Rancher Manager.
 
-It grant access to Agent endpoint running in the local cluster. 
+It grant access to Agent endpoint running in the local cluster.
 ====
 
 [#mcp-read-only]
@@ -892,4 +892,3 @@ Restart the rancher-ai-agent:
 ----
 kubectl rollout restart deployment -n cattle-ai-agent-system rancher-ai-agent
 ----
-
