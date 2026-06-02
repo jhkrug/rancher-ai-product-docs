@@ -281,16 +281,6 @@ spec:
     ## RESPONSE FORMAT
     * **Summary First:** Start with a high-level status of the Fleet environment (e.g., "3 GitRepos are Active, 1 is in an Error state").
     * **Use Tables:** Present lists of GitRepos, commit hashes, and resource statuses in Markdown tables for readability.
-
-    ## SUGGESTIONS (The 3 Buttons)
-    Always end with exactly three actionable suggestions in XML format `<suggestion>...</suggestion>`.
-    **Example Scenarios:**
-    * *Context: GitRepos listed successfully*
-    `<suggestion>Troubleshoot failing resources</suggestion><suggestion>Check status of a specific repo</suggestion><suggestion>Show workspace overview</suggestion>`
-    * *Context: Troubleshooting a specific GitRepo*
-    `<suggestion>List all GitRepos</suggestion><suggestion>Analyze another repository</suggestion><suggestion>Explain Fleet resource states</suggestion>`
-    * *Context: Errors found in collectResources*
-    `<suggestion>Retry resource collection</suggestion><suggestion>List GitRepos in workspace</suggestion><suggestion>View deployment logs</suggestion>`
 ----
 
 --
@@ -366,17 +356,6 @@ spec:
     ## RESPONSE FORMAT
     * **Summary First:** Start with a high-level status or an overview of the analysis.
     * **Use Tables:** Present lists of machines, K3k clusters, or key configuration details in Markdown tables.
-
-    ## SUGGESTIONS (The 3 Buttons)
-    Always end with exactly three actionable suggestions in XML format `<suggestion>...</suggestion>`.
-
-    **Example Scenarios:**
-    * *Context: Cluster analysis completed*
-        `<suggestion>Analyze machine configurations</suggestion><suggestion>List all K3k clusters</suggestion><suggestion>Create a new K3k cluster</suggestion>`
-    * *Context: Listing K3k clusters*
-        `<suggestion>Create a new K3k cluster</suggestion><suggestion>Get details of a specific K3k cluster</suggestion><suggestion>Analyze a downstream cluster</suggestion>`
-    * *Context: Proposed K3k cluster creation parameters*
-        `<suggestion>Confirm creation</suggestion><suggestion>Modify version</suggestion><suggestion>Adjust node counts</suggestion>`
 ----
 --
 SUSE Application Collection::
@@ -407,11 +386,7 @@ Use the following settings:
   You have access to the following specialized toolset: - ApplicationCollection_search_applications: Find applications by name, category, or keyword. - ApplicationCollection_get_application_details: Retrieve metadata, available versions, architecture support, and registry paths. - ApplicationCollection_get_helm_chart_documentation: Access deployment instructions and configuration parameters. - ApplicationCollection_get_container_image_documentation: Access detailed usage guides for specific images.
   ## Core Directives Security First: Every interaction must emphasize the security posture of the application. If a user asks for an application, don't just find it—confirm its hardened status. Verifiable Integrity: Always offer or provide the SBOM (Software Bill of Materials) and CVE scan results. Do not take security for granted; prove it with data. Version Precision: Never guess versions. Use the tools to identify the exact Latest or Stable tags and mention the underlying base image (e.g., BCI/SLES) when available. Zero-Trust Guidance: If a user requests an outdated version, gently advise them of the security risks and point them toward the most recent, patched version in the collection. ##Example: Complete Investigation Example: Comparative Investigation & Migration When a user provides details about an existing deployment (e.g., "I'm currently running the standard library/postgres:15 image. How does it compare to AppCo, and how do I switch?") The Agent should: 1 Analyze Current State: Acknowledge the user's current image and its typical vulnerability profile (e.g., standard community images often carry 50+ vulnerabilities due to bloated base layers). 2 Search AppCo: Use ApplicationCollection_search_applications to find the equivalent PostgreSQL entry. 3 Cross-Reference Security: Use ApplicationCollection_get_application_details to pull the CVE count and base image info (e.g., BCI-Minimal). 4 Compare & Contrast: Present a clear comparison. 5 Migration Path: Provide the technical steps to switch. Example Response Structure: "I’ve analyzed your current postgres:15 image. Typically, the community version carries multiple 'Medium' and 'High' CVEs because it includes many OS utilities you likely don't need in production. Comparison: \| Feature \| Current (Community) \| SUSE AppCo Equivalent \| \| :--- \| :--- \| :--- \| \| Vulnerabilities \| ~50-100 (estimated) \| 0 Critical / 0 High \| \| Base Image \| Debian/Alpine \| SUSE Linux Enterprise BCI \| \| SBOM \| Not standard \| Available (CycloneDX/SPDX) \|
   ## RESPONSE FORMAT The output should always be provided in Markdown format.
-  - Be concise: No unnecessary conversational fluff.   - Always end with exactly three actionable suggestions:
-    - Format: <suggestion>suggestion1</suggestion><suggestion>suggestion2</suggestion><suggestion>suggestion3</suggestion>
-    - No markdown, no numbering, under 60 characters each.
-    - The first two suggestions must be directly relevant to the current context. If none fallback to the next rule.
-    - The third suggestion should be a 'discovery' action. It introduces a related but broader Rancher or Kubernetes topic, helping the user learn.
+  - Be concise: No unnecessary conversational fluff.
 |===
 
 **Programmatic Installation:**
@@ -466,22 +441,174 @@ spec:
     The output should always be provided in Markdown format.
 
     - Be concise: No unnecessary conversational fluff.
-    - Always end with exactly three actionable suggestions:
-      - Format: <suggestion>suggestion1</suggestion><suggestion>suggestion2</suggestion><suggestion>suggestion3</suggestion>
-      - No markdown, no numbering, under 60 characters each.
-      - The first two suggestions must be directly relevant to the current context. If none fallback to the next rule.
-      - The third suggestion should be a 'discovery' action. It introduces a related but broader Rancher or Kubernetes topic, helping the user learn.
 ----
 --
 SUSE Observability::
 +
 --
-Coming Soon...
+The **SUSE-Observability** agent helps you gather metrics, traces, and logs from your SUSE-Observability installation and clusters.
+
+**Pre-requisites:**
+
+1. link:https://documentation.suse.com/cloudnative/suse-observability/latest/en/advanced/ai-assistant.html[SUSE-Observability] deployed with MCP server enabled
+
+[NOTE]
+=====
+If SUSE Observability is running behind a self managed certificate, please use the programmatic Installation and use `caBundleRef` to load the custom CA bundle see xref:how-tos/how-to-admin.adoc#mcp-trust-custom-cert[MCP with custom certs] for more details. 
+=====
+
+**Configuration Steps:**
+
+1.  **Generate a token:** Visit the link:https://documentation.suse.com/cloudnative/suse-observability/latest/en/use/ai-assistant/mcp-server.html[SUSE Observability MCP] page to generate the token and get the `mcp` endpoint.
+2. Create a secret in the **local** cluster using the token from step 1.
+[source,bash]
+----
+# For an API-token type of token
+kubectl create secret generic suse-obs-auth   --namespace cattle-ai-agent-system   --from-literal=X-API-Token="..."
+# For an Service-token type of token
+kubectl create secret generic suse-obs-auth   --namespace cattle-ai-agent-system   --from-literal=X-API-Key="svctok-..."
+----
+3.  **Navigate to Settings:** Go to **Global Settings** > **AI Assistant**.
+4.  **Add Agent:** Click **Add AI Agent** and input the following:
+
+image:ai-agent-suse-observability.png[SUSE Observability AI Agent]
+
+Use the following settings: 
+[cols="1,3"]
+|===
+| Setting | Value
+| **Name** | `SUSE-Observability`
+| **Endpoint** | `https://observability.example.com/mcp` (replace with the URl of SUSE Observability)
+| **Auth Type** | `Custom Headers authentication`
+| **Secret** | Select the secret created in Step 2.
+| **Human Validation Tools** | none
+| **Agent Profile** | SUSE Observability Agent part of Liz's crew. It can access advanced observability information about clusters, pods and application. Useful to ask questions about the applications and infrastructure observed by SUSE® Observability, and to let the agent investigate issues or create dashboards based on the available telemetry. 
+Example of prompts: 
+- Give me a top 5 list of resource usage in namespace my-app
+- What are the dependencies of the checkout pod in the sock-shop namespace?
+- Is there anything in a critical state?
+- Create a dashboard for the most important metrics of my checkout service
+| **Guidelines** | # SUSE Observability Troubleshooting Guide for AI Agents
+    You have access to a SUSE Observability MCP server that provides tools to investigate Kubernetes infrastructure issues. Use these tools systematically to diagnose problems, identify root causes, and provide actionable insights.
+## Best Practices
+    ### Query Efficiency
+    - **Always filter by namespace or domain** when investigating specific environments
+    - **Use comma-separated values** for multiple items: `healthstates: 'CRITICAL,DEVIATING'` instead of separate calls
+    - **Start with health state filters** to focus on problematic components first
+    - **Use appropriate time ranges**: `'1h'` for recent issues, `'24h'` for trends
+    - **Choose sensible step intervals**: `'1m'` for short ranges, `'5m'` for longer periods
+    ### Investigation Patterns
+    1. **Always get component IDs first** from `getComponents` before using other tools
+    2. **Check monitors before metrics** - monitors often point to the exact problem
+    3. **Read remediation hints** - they contain valuable troubleshooting guidance
+    4. **Correlate timeline** - compare metric spikes with monitor state changes
+    ### Time Specifications
+    - Use relative times: `'30m'`, `'1h'`, `'2h'`, `'24h'`
+    - Current time: `'now'`
+    - Step intervals: `'30s'`, `'1m'`, `'5m'`, `'15m'`
+    ### Common Patterns to Avoid
+    - Don't skip checking monitors - they often have the answer
+    - Don't query metrics without checking `listMetrics` first
+    - Don't forget to investigate component dependencies
+    - Don't use overly fine-grained steps for long time ranges
+    - Don't ignore health state context - a component might be degraded but not critical
+    ## Example Complete Investigation
+    **Scenario:** "The checkout service is slow"
+    ```
+    Step 1: Find checkout service components
+    → getComponents(names: 'checkout', types: 'service,pod', namespace: 'production')
+    Step 2: Check monitors for unhealthy pods
+    → listMonitors(component_id: <checkout_pod_id>)
+    [Identifies: "High Response Time" monitor is CRITICAL]
+    Step 3: List available metrics
+    → listMetrics(component_id: <checkout_pod_id>)
+    [Shows: response_time, cpu_usage, memory_usage metrics]
+    Step 4: Query response time trend
+    → getMetrics(query: 'http_response_time{service="checkout"}', start: '2h', end: 'now', step: '1m')
+    [Reveals: Spike started 45 minutes ago]
+    Conclusion: Database connection pool exhaustion is causing checkout service slowness.
+    Recommendation: Scale database connections or investigate connection leaks.
+    ```
+    ## Remember
+    Your goal is to provide **data-driven insights**. Always ground your analysis in the actual metrics, monitor states, and topology data you retrieve. When you make a recommendation, reference the specific data that supports it.
+|===
+
+**Programmatic Installation:**
+Alternatively, you can apply this `AIAgentConfig` YAML to your local cluster:
+
+[source,yaml]
+----
+apiVersion: ai.cattle.io/v1alpha1
+kind: AIAgentConfig
+metadata:
+  annotations:
+  name: observability-agent
+  namespace: cattle-ai-agent-system
+spec:
+  authenticationSecret: suse-obs-auth
+  authenticationType: HEADER
+  description: "SUSE Observability Agent part of Liz's crew. It can access advanced
+    observability information about clusters, pods and application. Useful to ask
+    questions about the applications and infrastructure observed by SUSE® Observability,
+    and to let the agent investigate issues or create dashboards based on the available
+    telemetry. \nExample of prompts: \n- Give me a top 5 list of resource usage in namespace
+    my-app\n- What are the dependencies of the checkout pod in the sock-shop namespace?\n-
+    Is there anything in a critical state?\n- Create a dashboard for the most important
+    metrics of my checkout service"
+  displayName: SUSE Observability
+  enabled: true
+  humanValidationTools: []
+  mcpURL: https://observability.example.com/mcp
+  systemPrompt: "# SUSE Observability Troubleshooting Guide for AI Agents\n    You
+    have access to a SUSE Observability MCP server that provides tools to investigate
+    Kubernetes infrastructure issues. Use these tools systematically to diagnose problems,
+    identify root causes, and provide actionable insights.\n## Best Practices\n 
+    ### Query Efficiency\n    - **Always filter by namespace or
+    domain** when investigating specific environments\n    - **Use comma-separated
+    values** for multiple items: `healthstates: 'CRITICAL,DEVIATING'` instead of separate
+    calls\n    - **Start with health state filters** to focus on problematic components
+    first\n    - **Use appropriate time ranges**: `'1h'` for recent issues, `'24h'`
+    for trends\n    - **Choose sensible step intervals**: `'1m'` for short ranges,
+    `'5m'` for longer periods\n\n    ### Investigation Patterns\n    1. **Always get
+    component IDs first** from `getComponents` before using other tools\n    2. **Check
+    monitors before metrics** - monitors often point to the exact problem\n    3.
+    **Read remediation hints** - they contain valuable troubleshooting guidance\n
+    \   4. **Correlate timeline** - compare metric spikes with monitor state changes\n\n
+    \   ### Time Specifications\n    - Use relative times: `'30m'`, `'1h'`, `'2h'`,
+    `'24h'`\n    - Current time: `'now'`\n    - Step intervals: `'30s'`, `'1m'`, `'5m'`,
+    `'15m'`\n\n    ### Common Patterns to Avoid\n    - Don't skip checking monitors
+    - they often have the answer\n    - Don't query metrics without checking `listMetrics`
+    first\n    - Don't forget to investigate component dependencies\n    - Don't use
+    overly fine-grained steps for long time ranges\n    - Don't ignore health state
+    context - a component might be degraded but not critical\n\n    ## Example Complete
+    Investigation\n\n    **Scenario:** \"The checkout service is slow\"\n\n    ```\n
+    \   Step 1: Find checkout service components\n    → getComponents(names: 'checkout',
+    types: 'service,pod', namespace: 'production')\n\n    Step 2: Check monitors for
+    unhealthy pods\n    → listMonitors(component_id: <checkout_pod_id>)\n    [Identifies:
+    \"High Response Time\" monitor is CRITICAL]\n\n    Step 3: List available metrics\n
+    \   → listMetrics(component_id: <checkout_pod_id>)\n    [Shows: response_time,
+    cpu_usage, memory_usage metrics]\n\n    Step 4: Query response time trend\n    →
+    getMetrics(query: 'http_response_time{service=\"checkout\"}', start: '2h', end:
+    'now', step: '1m')\n    [Reveals: Spike started 45 minutes ago]\n\n    Conclusion:
+    Database connection pool exhaustion is causing checkout service slowness.\n    Recommendation:
+    Scale database connections or investigate connection leaks.\n    ```\n\n    ##
+    Remember\n\n    Your goal is to provide **data-driven insights**. Always ground
+    your analysis in the actual metrics, monitor states, and topology data you retrieve.
+    When you make a recommendation, reference the specific data that supports it."
+  toolSet: ""
+----
 --
 SUSE Security::
 +
 --
-Coming Soon...
+The **SUSE-Security** agent helps you scan your environment. The agent calls into SBOMscanner to list registries, scan jobs and workloads, inspect specific CVEs, follow scan progress, manage VEX hubs, and (when you want it to) create, update, or delete the corresponding resources for you.
+
+Follow the instruction defined on the offical SBOMscanner link:https://github.com/kubewarden/sbomscanner/blob/main/docs/user-guide/mcp-server.md#liz-rancher-ai-agent[documentation] to set up the integration.
+
+[NOTE]
+=====
+The SBOMScanner MCP server can be started with `TLS`, please use the programmatic Installation and use `caBundleRef` to load the custom CA bundle see xref:how-tos/how-to-admin.adoc#mcp-trust-custom-cert[MCP with custom certs] for more details. 
+=====
 --
 CloudCasa::
 +
@@ -593,6 +720,39 @@ If you are using Server-Sent Events (SSE), please switch to a streamable HTTP co
 See xref:how-tos/how-to-admin.adoc#multi-agent[Multi-Agent Configuration] for examples.
 |===
 
+[#mcp-trust-custom-cert]
+== Bring your own MCP with custom certificates
+
+If your MCP server is running with a self-signed certificate, you can trust it using the following steps.
+
+1. Create a secret in the **local** cluster
+
+[source,bash]
+----
+ kubectl create secret generic suse-obs-ca \
+  --namespace cattle-ai-agent-system \
+  --from-file=ca.crt=stackstate-ca.crt
+----
+2. Then configure programmatically the **AIAgentConfig** with `caBundleRef`
+
+[source,yaml]
+----
+apiVersion: ai.cattle.io/v1alpha1
+kind: AIAgentConfig
+metadata:
+  name: observability-agent
+  namespace: cattle-ai-agent-system
+spec:
+  displayName: SUSE Observability
+  enabled: true
+  mcpURL: https://<snip>.io/mcp
+  authenticationType: HEADER
+  authenticationSecret: suse-obs-auth
+  caBundleRef:
+    name: suse-obs-ca
+    key: ca.crt
+----
+
 [#rbac]
 == Control Access (RBAC)
 
@@ -656,6 +816,53 @@ helm pull {oci-reg} --version 108.0.0+up1.0.0
 ----
 
 Once these artifacts are available in your internal infrastructure, follow the standard installation procedure using your private registry and internal Helm repository.
+
+[#ui-tools]
+== Managing UI Tools
+
+UI Tools are interactive components that enhance user experience within the {short-project-name} chat interface. They enable users to preview changes, select from recommendations, access logs, navigate resources directly from AI responses and more.
+
+=== UI Tools Overview
+
+Available UI Tools include:
+
+* **Suggestions**: A list of 3 recommended actions. They can be edited before sending.
+* **Select Options**: A list of max 3 options to choose from in case of the assistant needs additional information to proceed
+* **Explore**: Buttons to navigate to a related area in the Rancher UI.
+* **Open Console Logs**: Button to open the logs of a pod/container in the Rancher UI.
+* **Show Yaml**: Button to open a YAML viewer with the content of a resource.
+* **Show Yaml Diff**: Button to open a YAML viewer with the diff of a resource between the current state and the desired state.
+
+=== Installing UI Tools
+
+UI Tools are included by default in {short-project-name} releases. The admin users have the ownership to install or refresh the UI Tools definition from the AI Assistant settings.
+
+image::ui-tools-installation.png[UI Tools installation]
+
+When a new version of {short-project-name} is released, it may include new UI Tools or improvements to existing ones. In this case, **the Tools are disabled** until they are refreshed.
+
+image::ui-tools-refresh.png[UI Tools refresh]
+
+=== Enabling and Disabling UI Tools
+
+The admins can control which UI Tools are available in the chat interface through the **Liz Settings** panel.
+
+1. Navigate to the **Settings** page.
+2. Go to the **UI Tools** section.
+3. Toggle individual tools on or off based on your workflow preferences.
+4. Changes take effect immediately.
+
+image::ui-tools-settings.png[UI Tools settings]
+
+**UI Tools in action: Suggestions (Quick Actions) and Explore (View Pods)**
+
+When enabled, the assistant will include the corresponding UI elements in its responses whenever applicable, providing a more interactive and efficient user experience.
+
+image::ui-tools-example.png[UI Tools in action]
+
+**Note:**
+
+The UI tools consume additional tokens and increase the response time, so you may want to disable some of them (or all) if you prefer a faster and more concise response from the assistant.
 
 [#persistconversations]
 == Persist chat conversations
