@@ -1,6 +1,7 @@
 include::partial$variables.adoc[]
 
 = 企业级支持
+:page-languages: [en, de, es, fr, ja, pt, zh]
 :revdate: 2026-01-23
 :page-revdate: {revdate}
 :description: 针对的企业级支持{project-name}

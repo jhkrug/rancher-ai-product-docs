@@ -1,6 +1,7 @@
 include::partial$variables.adoc[]
 
 = Découvrez {project-name}
+:page-languages: [en, de, es, fr, ja, pt, zh]
 :revdate: 2026-01-23
 :page-revdate: {revdate}
 :description: Présentation de {project-name}, un produit SUSE® Rancher Prime.

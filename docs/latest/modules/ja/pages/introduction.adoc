@@ -1,6 +1,7 @@
 include::partial$variables.adoc[]
 
 = {project-name}に会いましょう
+:page-languages: [en, de, es, fr, ja, pt, zh]
 :revdate: 2026-01-23
 :page-revdate: {revdate}
 :description: {project-name}を紹介します。これはSUSE® Rancher Prime製品です。

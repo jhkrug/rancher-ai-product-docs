@@ -1,6 +1,7 @@
 include::partial$variables.adoc[]
 
 = 快速入门
+:page-languages: [en, de, es, fr, ja, pt, zh]
 :revdate: 2026-01-23
 :page-revdate: {revdate}
 :description: 开始使用 {project-name}，安装 {project-name} 堆栈并处理先决条件和身份验证。

@@ -1,6 +1,7 @@
 include::partial$variables.adoc[]
 
 = 体系结构
+:page-languages: [en, de, es, fr, ja, pt, zh]
 :revdate: 2026-02-25
 :page-revdate: {revdate}
 :description: 对{project-name}的多智能体架构的介绍。

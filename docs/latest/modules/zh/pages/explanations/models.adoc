@@ -1,6 +1,7 @@
 include::partial$variables.adoc[]
 
 = 验证过的模型
+:page-languages: [en, de, es, fr, ja, pt, zh]
 :revdate: 2026-03-10
 :page-revdate: {revdate}
 :description: 对已验证模型的说明。

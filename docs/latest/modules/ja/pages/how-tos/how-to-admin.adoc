@@ -1,6 +1,7 @@
 include::partial$variables.adoc[]
 
 = {project-name}の管理者向けハウツー
+:page-languages: [en, de, es, fr, ja, pt, zh]
 :revdate: 2026-01-23
 :page-revdate: {revdate}
 :description: {project-name}の管理者向けハウツーです。

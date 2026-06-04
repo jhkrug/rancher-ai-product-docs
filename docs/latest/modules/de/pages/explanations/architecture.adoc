@@ -1,6 +1,7 @@
 include::partial$variables.adoc[]
 
 = Architektur
+:page-languages: [en, de, es, fr, ja, pt, zh]
 :revdate: 2026-02-25
 :page-revdate: {revdate}
 :description: Eine Einführung in die Multi-Agenten-Architektur von {project-name}.

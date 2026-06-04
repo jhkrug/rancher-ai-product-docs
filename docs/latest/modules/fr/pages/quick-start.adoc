@@ -1,6 +1,7 @@
 include::partial$variables.adoc[]
 
 = Actions de
+:page-languages: [en, de, es, fr, ja, pt, zh]
 :revdate: 2026-01-23
 :page-revdate: {revdate}
 :description: Commencer avec {project-name}, installer la pile {project-name} et s'occuper des prérequis et de l'authentification.

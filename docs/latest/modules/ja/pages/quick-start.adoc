@@ -1,6 +1,7 @@
 include::partial$variables.adoc[]
 
 = クイックスタート
+:page-languages: [en, de, es, fr, ja, pt, zh]
 :revdate: 2026-01-23
 :page-revdate: {revdate}
 :description: {project-name}を使用して始めるには、{project-name}スタックをインストールし、前提条件と認証を行います。

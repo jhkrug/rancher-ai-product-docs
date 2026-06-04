@@ -1,6 +1,7 @@
 include::partial$variables.adoc[]
 
 = Asistencia técnica para empresas
+:page-languages: [en, de, es, fr, ja, pt, zh]
 :revdate: 2026-01-23
 :page-revdate: {revdate}
 :description: Soporte empresarial para {project-name}

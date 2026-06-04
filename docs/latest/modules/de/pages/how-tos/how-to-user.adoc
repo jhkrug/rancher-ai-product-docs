@@ -1,6 +1,7 @@
 include::partial$variables.adoc[]
 
 = Interaktion mit Liz (KI-Assistentin)
+:page-languages: [en, de, es, fr, ja, pt, zh]
 :revdate: 2026-02-24
 :page-revdate: {revdate}
 :description: Erfahren Sie, wie Sie Liz, den KI-Assistenten in {project-name}, verwenden, um Probleme mit Ressourcen zu beheben und Arbeitslasten zu verwalten.

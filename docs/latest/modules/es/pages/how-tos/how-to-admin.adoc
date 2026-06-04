@@ -1,6 +1,7 @@
 include::partial$variables.adoc[]
 
 = Instrucciones para el administrador de {project-name}
+:page-languages: [en, de, es, fr, ja, pt, zh]
 :revdate: 2026-01-23
 :page-revdate: {revdate}
 :description: Instrucciones para el administrador de {project-name}.

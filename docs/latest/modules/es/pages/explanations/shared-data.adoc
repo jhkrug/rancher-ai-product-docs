@@ -1,6 +1,7 @@
 include::partial$variables.adoc[]
 
 = Datos Compartidos y Contexto
+:page-languages: [en, de, es, fr, ja, pt, zh]
 :revdate: 2026-03-10
 :page-revdate: {revdate}
 :description: Cómo {project-name} gestiona el contexto y la recopilación segura de datos desde Rancher y clústeres descendentes.

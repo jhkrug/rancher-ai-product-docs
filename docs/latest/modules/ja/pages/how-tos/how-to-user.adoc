@@ -1,6 +1,7 @@
 include::partial$variables.adoc[]
 
 = Liz（AIアシスタント）との対話
+:page-languages: [en, de, es, fr, ja, pt, zh]
 :revdate: 2026-02-24
 :page-revdate: {revdate}
 :description: {project-name}内のAIアシスタントであるLizを使用して、リソースのトラブルシューティングや作業負荷の管理を学びましょう。

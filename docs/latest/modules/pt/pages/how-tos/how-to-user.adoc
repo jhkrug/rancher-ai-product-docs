@@ -1,6 +1,7 @@
 include::partial$variables.adoc[]
 
 = Interagindo com Liz (Assistente de IA)
+:page-languages: [en, de, es, fr, ja, pt, zh]
 :revdate: 2026-02-24
 :page-revdate: {revdate}
 :description: Aprenda a usar Liz, o assistente de IA em {project-name}, para solucionar problemas e gerenciar cargas de trabalho.

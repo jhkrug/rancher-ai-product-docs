@@ -1,6 +1,7 @@
 include::partial$variables.adoc[]
 
 = 与 Liz（AI 助手）互动
+:page-languages: [en, de, es, fr, ja, pt, zh]
 :revdate: 2026-02-24
 :page-revdate: {revdate}
 :description: 学习如何使用 Liz，这个在 {project-name} 中的 AI 助手，来排查资源和管理工作负载。

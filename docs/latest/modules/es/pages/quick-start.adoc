@@ -1,6 +1,7 @@
 include::partial$variables.adoc[]
 
 = Inicio rápido
+:page-languages: [en, de, es, fr, ja, pt, zh]
 :revdate: 2026-01-23
 :page-revdate: {revdate}
 :description: Comenzando con {project-name}, instalando la pila {project-name} y ocupándote de los requisitos previos y la autenticación.
