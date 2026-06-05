@@ -36,7 +36,7 @@ checkmake:
 
 .PHONY: preview
 preview:
-	npx http-server build-rancher-dsc-local/site -c-1
+	npx http-server build-local/site -c-1
 
 .PHONY: all
 all:
