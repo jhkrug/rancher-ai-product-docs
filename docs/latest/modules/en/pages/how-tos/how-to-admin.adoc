@@ -29,6 +29,8 @@ If you configured the model via the settings page, please report the settings ba
 
 Click on the 'Extension' menu in Rancher, then in the 'Installed' list, select 'SUSE AI Assistant'. Click on 'Upgrade to this version'.
 
+For further information on managing extensions refer to the
+link:https://documentation.suse.com/cloudnative/rancher-manager/latest/en/integrations/rancher-extensions.html[Managing Rancher Extensions] documentation.
 
 [#ollama]
 == Configure Ollama provider
