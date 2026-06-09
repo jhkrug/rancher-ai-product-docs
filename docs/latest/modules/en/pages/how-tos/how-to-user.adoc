@@ -2,7 +2,7 @@ include::partial$variables.adoc[]
 
 = Interacting with Liz (AI Assistant)
 :page-languages: [en, de, es, fr, ja, pt, zh]
-:revdate: 2026-02-24
+:revdate: 2026-06-09
 :page-revdate: {revdate}
 :description: Learn how to use Liz, the AI assistant in {project-name}, to troubleshoot resources and manage workloads.
 
@@ -14,18 +14,6 @@ include::partial$variables.adoc[]
 When you open the side panel, Liz greets you with a welcome message containing tips, a short news letter, and a list of suggestions to get you started (see xref:/how-tos/how-to-admin.adoc#ui-tools[ui-tools] section).
 
 image::chat-panel.png[Liz chat panel., align="center",  width="50%"]
-
-[#upgrading-liz]
-== Upgrading Liz
-
-To upgrade the `rancher-ai-agent` helm chart, run the following command:
-
-[source,console]
-----
-helm upgrade rancher-ai-agent --namespace cattle-ai-agent-system \
-    oci://stgregistry.suse.com/rancher/charts/rancher-ai-agent \
-    --version 109.0.1+up1.0.2
-----
 
 [#context-aware]
 == Context-Awareness
