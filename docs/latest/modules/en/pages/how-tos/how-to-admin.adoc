@@ -2,9 +2,35 @@ include::partial$variables.adoc[]
 
 = How-tos for the Administrator of {project-name}
 :page-languages: [en, de, es, fr, ja, pt, zh]
-:revdate: 2026-01-23
+:revdate: 2026-06-09
 :page-revdate: {revdate}
 :description: How-tos for the administrator of {project-name}.
+
+[#upgrading-liz]
+== Upgrading Liz
+
+=== Upgrade the `rancher-ai-agent`
+
+To upgrade the `rancher-ai-agent` helm chart, run the following command:
+
+[source,console]
+----
+helm upgrade rancher-ai-agent --namespace cattle-ai-agent-system \
+    oci://stgregistry.suse.com/rancher/charts/rancher-ai-agent \
+    --version 109.0.1+up1.0.2
+----
+
+[NOTE]
+====
+If you configured the model via the settings page, please report the settings back in the values file before updating.
+====
+
+=== Upgrade the UI extension
+
+Click on the 'Extension' menu in Rancher, then in the 'Installed' list, select 'SUSE AI Assistant'. Click on 'Upgrade to this version'.
+
+For further information on managing extensions refer to the
+link:https://documentation.suse.com/cloudnative/rancher-manager/latest/en/integrations/rancher-extensions.html[Managing Rancher Extensions] documentation.
 
 [#ollama]
 == Configure Ollama provider
