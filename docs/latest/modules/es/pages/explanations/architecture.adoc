@@ -50,7 +50,7 @@ La Extensión de UI proporciona la interfaz de chat orientada al usuario dentro 
 == Cómo Funciona (El Flujo)
 
 1. **Petición del Usuario**: El usuario envía una consulta a través de la extensión de la UI.
-2. **Enrutamiento del Supervisor**: {short-project-name} identifica la intención y enruta la consulta, junto con el contexto de la UI, al Agente especializado (por ejemplo, el Fleet Agent).
+2. **Enrutamiento del Supervisor**: {short-project-name} identifica la intención y enruta la consulta, junto con el contexto de la UI, al Agente especializado (por ejemplo, el Continuous Delivery Agent).
 3. **Razonamiento LLM**: El LLM del Agente especializado interpreta la solicitud, razona sobre el problema y propone un plan de acción.
 4. **Actuación del Agente**: Si el plan requiere operaciones externas, el agente llama a las herramientas del Servidor MCP apropiado utilizando el token seguro del usuario.
 5. **Formulación de Respuesta**: El LLM toma las salidas de las herramientas y elabora una respuesta coherente y legible para los humanos.
@@ -72,7 +72,7 @@ fin
 
 subgráfico "C. Agentes Especializados (ReAct)" +
 AgenteRancher(Agente Rancher) +
-AgenteFleet(Agente Fleet) +
+AgenteFleet(Agente Continuous Delivery Rancher) +
 AgenteProv(Agente de Aprovisionamiento Rancher) +
 AgenteAppCo(Agente de Colección de Aplicaciones SUSE) +
 AgenteObs(Agente de Observabilidad SUSE) +

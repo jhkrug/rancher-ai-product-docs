@@ -232,17 +232,17 @@ These agents allow {short-project-name} to handle specific domains such as GitOp
 {short-project-name} Liz is deployed with 3 built-in AI agents by default:
 
 * Rancher - the main Rancher Agent
-* Fleet - The Gitops specialist
+* Continuous Delivery - The GitOps specialist
 * Cluster Provisioning - The cluster specialist
 
 [tabs]
 ====
-SUSE Rancher-Fleet::
+SUSE Rancher-Continuous-Delivery::
 +
 --
 By default, {short-project-name} deploys this built-in Agent.
 
-Optimise tokens usage, or tailor the user experience for GitOps by deploying a dedicated **Fleet Agent**.
+Optimise tokens usage, or tailor the user experience for GitOps by deploying a dedicated **Continuous Delivery Agent**.
 
 [NOTE]
 =====
@@ -270,7 +270,7 @@ spec:
     * **Continuous Delivery overview** (e.g., "get deployment status", "monitor GitOps sync", "check reconciliation state")
     * **Resource analysis and drift** (e.g., "collect Fleet resources", "inspect bundle errors", "check for synchronization issues")
 
-  displayName: Rancher-Fleet
+  displayName: Rancher-Continuous-Delivery
   enabled: true
   mcpURL: rancher-mcp-server.cattle-ai-agent-system.svc
   toolSet: fleet

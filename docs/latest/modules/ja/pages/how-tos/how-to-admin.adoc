@@ -197,17 +197,17 @@ kubectl rollout restart deployment -n cattle-ai-agent-system rancher-ai-agent
 {short-project-name} Lizは、デフォルトで3つのビルトインAIエージェントを持っています：
 
 * Rancher - メインのRancherエージェント
-* Fleet - GitOpsの専門家
+* Continuous Delivery - GitOpsの専門家
 * Cluster Provisioning - クラスターの専門家
 
 [tabs]
 ====
-SUSE Rancher-Fleet::
+SUSE Rancher-Continuous-Delivery::
 +
 --
 デフォルトでは、{short-project-name}はこのビルトインエージェントをデプロイします。
 
-トークンの使用を最適化するか、専用の**Fleet Agent**をデプロイしてGitOpsのユーザーエクスペリエンスを調整します。
+トークンの使用を最適化するか、専用の**Continuous Delivery Agent**をデプロイしてGitOpsのユーザーエクスペリエンスを調整します。
 
 [NOTE]
 =====
@@ -235,7 +235,7 @@ spec:
     * **Continuous Delivery overview** (e.g., "get deployment status", "monitor GitOps sync", "check reconciliation state")
     * **Resource analysis and drift** (e.g., "collect Fleet resources", "inspect bundle errors", "check for synchronization issues")
 
-  displayName: Rancher-Fleet
+  displayName: Rancher-Continuous-Delivery
   enabled: true
   mcpURL: rancher-mcp-server.cattle-ai-agent-system.svc
   toolSet: fleet

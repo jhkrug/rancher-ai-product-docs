@@ -36,7 +36,7 @@ La siguiente lista de acciones define los datos recopilados del Administrador de
 | **Análisis de Clúster**
 | `analyzeCluster`, `analyzeClusterMachines`, `getNodes`, `getProject`
 
-| **Fleet & GitOps**
+| **Continuous Delivery & GitOps**
 | `listGitRepos`, `getGitRepo`, `analyzeFleetResources`
 |===
 

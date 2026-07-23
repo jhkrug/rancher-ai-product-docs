@@ -36,7 +36,7 @@ The following list of actions defines the data collected from the Rancher Manage
 | **Cluster Analysis**
 | `analyzeCluster`, `analyzeClusterMachines`, `getNodes`, `getProject`
 
-| **Fleet & GitOps**
+| **Continuous Delivery & GitOps**
 | `listGitRepos`, `getGitRepo`, `analyzeFleetResources`
 |===
 

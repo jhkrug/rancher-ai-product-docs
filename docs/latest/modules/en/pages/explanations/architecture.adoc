@@ -14,7 +14,7 @@ The system is designed as a **hierarchical multi-agent ecosystem**. It uses a ce
 
 {short-project-name} is the entry point of the system and the orchestrator of the user experience. Rather than executing every technical task directly, {short-project-name} acts as an intelligent **Router**.
 
-* Analyzes the user's prompt to determine the required domain (e.g., Security, Provisioning, or Fleet).
+* Analyzes the user's prompt to determine the required domain (e.g., Security, Provisioning, or Continuous Delivery).
 * Consults the `AIAgentConfig` metadata to select the most appropriate specialized Agent for the task.
 * Tracks the user's location in the Rancher UI and ensures relevant cluster, namespace, and resource metadata are passed to the downstream Agents to provide a "context-aware" response.
 
@@ -57,7 +57,7 @@ is responsible for:
 == How It Works (The Flow)
 
 1. **User Request**: The user submits a query through the UI Extension.
-2. **Supervisor Routing**: {short-project-name} identifies the intent and routes the query, along with the UI context, to the specialized Agent (for example, the Fleet Agent).
+2. **Supervisor Routing**: {short-project-name} identifies the intent and routes the query, along with the UI context, to the specialized Agent (for example, the Continuous Delivery Agent).
 3. **LLM Reasoning**: The specialized Agent's LLM interprets the request, reasons about the problem, and proposes an action plan.
 4. **Agent Acting**: If the plan requires external operations, the agent calls the appropriate MCP Server tools using the user's secure token.
 5. **Response Formulation**: The LLM takes the tool outputs and crafts a coherent, human-readable response.
@@ -79,7 +79,7 @@ end
 
 subgraph "C. Specialized Agents (ReAct)"
 RancherAgent(Rancher Agent)
-FleetAgent(Rancher Fleet Agent)
+FleetAgent(Rancher Continuous Delivery Agent)
 ProvAgent(Rancher Provisioning Agent)
 AppCoAgent(SUSE Application Collection Agent)
 ObsAgent(SUSE Observability Agent)

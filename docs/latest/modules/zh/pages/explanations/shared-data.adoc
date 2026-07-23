@@ -36,7 +36,7 @@ Rancher代理使用通过link:https://github.com/rancher/rancher-ai-mcp?tab=read
 | **集群分析**
 | `analyzeCluster`、`analyzeClusterMachines`、`getNodes`、`getProject`
 
-| **Fleet 与 GitOps**
+| **Continuous Delivery 与 GitOps**
 | `listGitRepos`、`getGitRepo`、`analyzeFleetResources`
 |===
 

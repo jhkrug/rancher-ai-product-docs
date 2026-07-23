@@ -36,7 +36,7 @@ La liste suivante d'actions définit les données collectées à partir du gesti
 | **Analyse de cluster**
 | `analyzeCluster`, `analyzeClusterMachines`, `getNodes`, `getProject`
 
-| **Fleet et GitOps**
+| **Continuous Delivery et GitOps**
 | `listGitRepos`, `getGitRepo`, `analyzeFleetResources`
 |===
 

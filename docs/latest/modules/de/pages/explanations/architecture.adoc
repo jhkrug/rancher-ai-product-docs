@@ -14,7 +14,7 @@ Das System ist als **hierarchisches Multi-Agenten-Ökosystem** konzipiert. Es ve
 
 {short-project-name} ist der Einstiegspunkt des Systems und der Orchestrator des Benutzererlebnisses. Anstatt jede technische Aufgabe direkt auszuführen, fungiert {short-project-name} als intelligenter **Router**.
 
-* Analysiert die Eingabe des Benutzers, um das erforderliche Fachgebiet (z. B. Sicherheit, Bereitstellung oder Fleet) zu bestimmen.
+* Analysiert die Eingabe des Benutzers, um das erforderliche Fachgebiet (z. B. Sicherheit, Bereitstellung oder Continuous Delivery) zu bestimmen.
 * Konsultiert die `AIAgentConfig`-Metadaten, um den am besten geeigneten spezialisierten Agenten für die Aufgabe auszuwählen.
 * Verfolgt den Standort des Benutzers in der Rancher-Benutzeroberfläche und stellt sicher, dass relevante Cluster-, Namespace- und Ressourcenmetadaten an die Downstream-Agenten weitergegeben werden, um eine "kontextbewusste" Antwort zu liefern.
 
@@ -50,7 +50,7 @@ Die UI-Erweiterung bietet die benutzerfreundliche Chatoberfläche innerhalb des 
 == Wie es funktioniert (Der Ablauf)
 
 1. **Benutzeranfrage**: Der Benutzer reicht eine Anfrage über die UI-Erweiterung ein.
-2. **Supervisor Routing**: {short-project-name} identifiziert die Absicht und leitet die Anfrage zusammen mit dem UI-Kontext an den spezialisierten Agenten (zum Beispiel den Fleet Agent) weiter.
+2. **Supervisor Routing**: {short-project-name} identifiziert die Absicht und leitet die Anfrage zusammen mit dem UI-Kontext an den spezialisierten Agenten (zum Beispiel den Continuous Delivery Agent) weiter.
 3. **LLM Reasoning**: Das LLM des spezialisierten Agenten interpretiert die Anfrage, denkt über das Problem nach und schlägt einen Aktionsplan vor.
 4. **Agent Acting**: Wenn der Plan externe Operationen erfordert, ruft der Agent die entsprechenden MCP-Server-Tools unter Verwendung des sicheren Tokens des Benutzers auf.
 5. **Response Formulation**: Das LLM nimmt die Ausgaben der Tools und erstellt eine kohärente, menschenlesbare Antwort.
@@ -72,7 +72,7 @@ end
 
 subgraph "C. Spezialisierte Agenten (ReAct)"
 RancherAgent(Rancher Agent)
-FleetAgent(Rancher Fleet Agent)
+FleetAgent(Rancher Continuous Delivery Agent)
 ProvAgent(Rancher Provisioning Agent)
 AppCoAgent(SUSE Application Collection Agent)
 ObsAgent(SUSE Observability Agent)
