@@ -194,7 +194,7 @@ Amplie as capacidades de {short-project-name} configurando Agentes de IA especia
 
 Esses agentes permitem que {short-project-name} lide com domínios específicos, como GitOps, áreas de Provisionamento de Cluster (recursos CAPI, K3k), Segurança e Observabilidade. 
 
-{short-project-name} Liz é implantada com 3 agentes de IA incorporados por padrão:
+{short-project-name} é implantada com 3 agentes de IA incorporados por padrão:
 
 * Rancher - o Agente principal do Rancher
 * Fleet - O especialista em GitOps

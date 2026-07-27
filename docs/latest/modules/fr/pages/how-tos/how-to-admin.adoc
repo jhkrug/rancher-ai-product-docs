@@ -194,7 +194,7 @@ kubectl rollout restart deployment -n cattle-ai-agent-system rancher-ai-agent
 
 Ces agents permettent à {short-project-name} de gérer des domaines spécifiques tels que GitOps, les zones de provisionnement de clusters (ressources CAPI, K3k), la sécurité et l'observabilité. 
 
-{short-project-name} Liz est déployé par défaut avec 3 agents IA intégrés{nbsp}:
+{short-project-name} est déployé par défaut avec 3 agents IA intégrés{nbsp}:
 
 * Rancher - l'agent principal de Rancher
 * Fleet - le spécialiste GitOps

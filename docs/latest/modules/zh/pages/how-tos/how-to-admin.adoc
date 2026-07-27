@@ -194,7 +194,7 @@ kubectl rollout restart deployment -n cattle-ai-agent-system rancher-ai-agent
 
 这些代理允许 {short-project-name} 处理特定领域，如 GitOps、集群配置区域（CAPI 资源、K3k）、安全性和可观测性。
 
-{short-project-name} Liz 默认部署了 3 个内置 AI 代理：
+{short-project-name} 默认部署了 3 个内置 AI 代理：
 
 * Rancher - 主要的 Rancher 代理
 * Fleet - GitOps 专家

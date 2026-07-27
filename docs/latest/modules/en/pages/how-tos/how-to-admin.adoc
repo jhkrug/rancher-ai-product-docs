@@ -229,7 +229,7 @@ Extend {short-project-name}’s capabilities by configuring specialized AI Agent
 
 These agents allow {short-project-name} to handle specific domains such as GitOps, Cluster Provisioning areas (CAPI resources, K3k), Security and Observability.
 
-{short-project-name} Liz is deployed with 3 built-in AI agents by default:
+{short-project-name} is deployed with 3 built-in AI agents by default:
 
 * Rancher - the main Rancher Agent
 * Fleet - The Gitops specialist

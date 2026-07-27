@@ -194,7 +194,7 @@ kubectl rollout restart deployment -n cattle-ai-agent-system rancher-ai-agent
 
 これらのエージェントは、{short-project-name}がGitOps、クラスターのプロビジョニング領域（CAPIリソース、K3k）、セキュリティおよび監視などの特定のドメインを処理できるようにします。
 
-{short-project-name} Lizは、デフォルトで3つのビルトインAIエージェントを持っています：
+{short-project-name} は、デフォルトで3つのビルトインAIエージェントを持っています：
 
 * Rancher - メインのRancherエージェント
 * Fleet - GitOpsの専門家
