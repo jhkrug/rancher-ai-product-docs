@@ -36,7 +36,7 @@ Rancherエージェントは、link:https://github.com/rancher/rancher-ai-mcp?ta
 | **クラスター分析**
 | `analyzeCluster`、`analyzeClusterMachines`、`getNodes`、`getProject`
 
-| **Fleet & GitOps**
+| **Continuous Delivery & GitOps**
 | `listGitRepos`、`getGitRepo`、`analyzeFleetResources`
 |===
 

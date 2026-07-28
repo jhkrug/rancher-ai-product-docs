@@ -14,7 +14,7 @@ O sistema é projetado como um **ecossistema multi-agente hierárquico**. Ele us
 
 {short-project-name} é o ponto de entrada do sistema e o orquestrador da experiência do usuário. Em vez de executar diretamente cada tarefa técnica, {short-project-name} atua como um **Roteador** inteligente.
 
-* Analisa o prompt do usuário para determinar o domínio necessário (por exemplo, Segurança, Provisionamento ou Fleet).
+* Analisa o prompt do usuário para determinar o domínio necessário (por exemplo, Segurança, Provisionamento ou Continuous Delivery).
 * Consulta os metadados de `AIAgentConfig` para selecionar o Agente especializado mais apropriado para a tarefa.
 * Acompanha a localização do usuário na interface do Rancher e garante que os metadados relevantes de cluster, namespace e recurso sejam passados para os Agentes downstream para fornecer uma resposta "consciente do contexto".
 
@@ -72,7 +72,7 @@ encerrar
 
 subgrafo "C. Agentes Especializados (ReAct)" +
 AgenteRancher(Rancher Agent) +
-AgenteFleet(Rancher Fleet Agent) +
+AgenteFleet(Rancher Continuous Delivery Agent) +
 AgenteProv(Rancher Provisioning Agent) +
 AgenteAppCo(SUSE Application Collection Agent) +
 AgenteObs(SUSE Observability Agent) +

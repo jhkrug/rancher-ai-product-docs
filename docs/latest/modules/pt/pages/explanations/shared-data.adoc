@@ -36,7 +36,7 @@ A lista a seguir de ações define os dados coletados do Gerenciador do Rancher 
 | **Análise de Cluster**
 | `analyzeCluster`, `analyzeClusterMachines`, `getNodes`, `getProject`
 
-| **Fleet & GitOps**
+| **Continuous Delivery & GitOps**
 | `listGitRepos`, `getGitRepo`, `analyzeFleetResources`
 |===
 

@@ -50,7 +50,7 @@ L'extension d'UI fournit l'interface de chat orientée utilisateur au sein du ta
 == Comment ça fonctionne (Le Flux)
 
 1. **Demande Utilisateur**{nbsp}: L'utilisateur soumet une requête via l'extension de l'interface utilisateur.
-2. **Routage du Superviseur**{nbsp}: {short-project-name} identifie l'intention et achemine la requête, ainsi que le contexte de l'interface utilisateur, vers l'Agent spécialisé (par exemple, le Fleet agent).
+2. **Routage du Superviseur**{nbsp}: {short-project-name} identifie l'intention et achemine la requête, ainsi que le contexte de l'interface utilisateur, vers l'Agent spécialisé (par exemple, le Continuous Delivery Agent).
 3. **Raisonnement LLM**{nbsp}: L'LLM de l'Agent spécialisé interprète la demande, réfléchit au problème et propose un plan d'action.
 4. **Agent en Action**{nbsp}: Si le plan nécessite des opérations externes, l'agent appelle les outils appropriés du serveur MCP en utilisant le token sécurisé de l'utilisateur.
 5. **Formulation de la Réponse**{nbsp}: L'LLM prend les résultats des outils et élabore une réponse cohérente et lisible par un humain.
@@ -72,7 +72,7 @@ fin
 
 sous-graphe "C. Agents Spécialisés (ReAct)"
 RancherAgent(Agent Rancher)
-FleetAgent(Fleet agent Rancher)
+FleetAgent(Agent de Continuous Delivery Rancher)
 AgentProv(Agent de Provisionnement Rancher)
 AgentAppCo(Agent de Collection d'Applications SUSE)
 AgentObs(Agent d'Observabilité SUSE)

@@ -67,7 +67,7 @@ subgraph "B. Supervisor Layer"
 Liz{Liz Supervisor}
 end
 
-子图 "C. 专门代理 (ReAct)" RancherAgent(Rancher Agent) FleetAgent(Rancher Fleet Agent) ProvAgent(Rancher Provisioning Agent) AppCoAgent(SUSE 应用收集代理) ObsAgent(SUSE Observability Agent) SecAgent(SUSE Security Agent) CustomAgent(自定义代理) 结束
+子图 "C. 专门代理 (ReAct)" RancherAgent(Rancher Agent) FleetAgent(Rancher Continuous Delivery Agent) ProvAgent(Rancher Provisioning Agent) AppCoAgent(SUSE 应用收集代理) ObsAgent(SUSE Observability Agent) SecAgent(SUSE Security Agent) CustomAgent(自定义代理) 结束
 
 子图 "LLM 推理层 (适用于所有代理)" 方向 LR LocalLLM[本地 LLM] PublicLLM[公共 LLM] 结束
 
