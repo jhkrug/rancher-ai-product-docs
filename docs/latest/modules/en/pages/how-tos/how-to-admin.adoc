@@ -112,27 +112,6 @@ Restart the rancher-ai-agent:
 kubectl rollout restart deployment -n cattle-ai-agent-system rancher-ai-agent
 ----
 
-=== Configure an OpenAI like endpoint
-
-From the UI or via the helm chart you can set an openAI like endpoint.
-
-* **On the UI**: Click on the Advanced settings section. Enter a valid
-  endpoint, and click on apply.
-* **In the helm chart**: Set the `openaiUrl` value.
-+
-image:openai-like-end.png[OpenAI like endpoint configuration screen]
-
-[source,bash,subs="attributes+"]
-----
-helm upgrade --install --namespace cattle-ai-agent-system --create-namespace --set openaiUrl="https://myendpoint.example" rancher-ai-agent {oci-reg}
-----
-
-Restart the rancher-ai-agent:
-[source,bash,subs="attributes+"]
-----
-kubectl rollout restart deployment -n cattle-ai-agent-system rancher-ai-agent
-----
-
 [#gemini]
 == Configure Gemini provider
 
@@ -211,6 +190,56 @@ awsBedrock:
 
 Update the chart:
 
+[source,bash,subs="attributes+"]
+----
+helm upgrade --install --namespace cattle-ai-agent-system --create-namespace -f values.yaml rancher-ai-agent {oci-reg}
+----
+
+Restart the rancher-ai-agent:
+[source,bash,subs="attributes+"]
+----
+kubectl rollout restart deployment -n cattle-ai-agent-system rancher-ai-agent
+----
+
+[#generic-provider]
+== Configure a Generic (OpenAI-compatible) provider
+
+The Generic provider lets you connect any OpenAI-compatible inference
+endpoint (for example vLLM, Azure OpenAI, or Evroc) without requiring a
+manual Helm chart edit. In the UI this option is labeled **Custom**.
+
+NOTE: This replaces the previous "Advanced settings" sub-flow under the
+OpenAI provider, which let you set a third-party OpenAI-compatible URL
+(`openaiUrl`). That field is now deprecated in favor of this dedicated
+provider.
+
+=== Select Custom via the UI
+
+Navigate to the 'Global Settings' -> 'AI Assistant' tab.
+
+. Select **Custom** as the provider.
+. Enter the Endpoint URL, a valid HTTP/HTTPS endpoint for the LLM (for
+  example \https://api.vllm.ai/v1).
+. Enter the API Key used to authenticate requests.
+. Enter the Model name to use for generating responses.
+. Click on Apply, the agent will restart which may take a few seconds.
++
+image::generic-tile.png[Custom (Generic OpenAI-compatible) provider configuration screen]
+
+=== Select Custom via the helm chart
+
+Use the following helm values to configure the Generic provider from the
+Agent helm chart:
+
+[source,yaml]
+----
+genericOpenaiLlmModel: "your-model-name"
+genericOpenaiUrl: "https://myendpoint.example/v1"
+genericOpenaiApiKey: "xxxxxxxxx"
+activeLlm: "generic-openai"
+----
+
+Update the chart:
 [source,bash,subs="attributes+"]
 ----
 helm upgrade --install --namespace cattle-ai-agent-system --create-namespace -f values.yaml rancher-ai-agent {oci-reg}
