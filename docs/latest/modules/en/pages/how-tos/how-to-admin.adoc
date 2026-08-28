@@ -222,6 +222,41 @@ Restart the rancher-ai-agent:
 kubectl rollout restart deployment -n cattle-ai-agent-system rancher-ai-agent
 ----
 
+=== Configure a custom Bedrock endpoint
+
+If your environment doesn't have direct internet access to the default AWS
+Bedrock service endpoint (for example when using an AWS PrivateLink VPC
+endpoint, a proxy, or a non-standard regional endpoint), you can point the
+agent at a custom Bedrock URL by adding a `url` field under `awsBedrock` in
+the helm values:
+
+[source,yaml]
+----
+bedrockLlmModel: "global.anthropic.claude-opus-4-5-20251101-v1:0"
+activeLlm: "bedrock"
+awsBedrock:
+  bearerToken: "xxxxxxxx"
+  region: "us-east-1"
+  url: "https://vpce-xxxxxxxx.bedrock-runtime.us-east-1.vpce.amazonaws.com"
+----
+
+Update the chart:
+
+[source,bash,subs="attributes+"]
+----
+helm upgrade --install --namespace cattle-ai-agent-system --create-namespace -f values.yaml rancher-ai-agent {oci-reg}
+----
+
+Restart the rancher-ai-agent:
+[source,bash,subs="attributes+"]
+----
+kubectl rollout restart deployment -n cattle-ai-agent-system rancher-ai-agent
+----
+
+NOTE: The custom endpoint URL can currently only be set through the helm
+chart. It isn't exposed as a field in the ‘Global Settings’ -> ‘AI Assistant’
+UI form.
+
 [#multi-agent]
 == Multi Agent configuration
 
