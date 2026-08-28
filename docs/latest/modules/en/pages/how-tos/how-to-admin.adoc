@@ -715,6 +715,60 @@ For further technical support or advanced configuration, please visit the offici
 --
 ====
 
+[#model-per-agent]
+== Configure a model per agent
+
+By default, every AI Agent uses the same LLM model as the globally configured AI provider (see xref:how-tos/how-to-admin.adoc#ollama[Configure Ollama], xref:how-tos/how-to-admin.adoc#openai[Configure OpenAI], xref:how-tos/how-to-admin.adoc#gemini[Configure Gemini], or xref:how-tos/how-to-admin.adoc#bedrock[Configure AWS Bedrock]). You can override the model used by an individual agent while keeping the same provider and its credentials.
+
+This is useful when different agents have different needs, for example:
+
+* A narrow-scope agent such as **Continuous Delivery** or **Cluster Provisioning** can use a smaller, cheaper, and faster model, since its tasks are well-defined and don't require the strongest reasoning capabilities.
+* The general-purpose **Rancher** agent, or an agent handling more complex or open-ended requests, can keep using a larger, more capable model.
+
+Overriding the model per agent reduces token costs and latency for specialized agents, without giving up quality where it matters most.
+
+[NOTE]
+====
+Only the model can be overridden per agent. The provider (and its associated credentials/endpoint) is still inherited from the global AI provider configuration.
+====
+
+=== Configure a model per agent via the UI
+
+. Navigate to **Global Settings** > **AI Assistant**.
+. Open the **Add AI Agent** or **Edit AI Agent** form for the agent you want to customize.
+. In the **Agent Model** section, uncheck **Same as the AI provider**.
+. Select the desired model from the **Model** field.
+. Click **Apply**. The agent will restart, which may take a few seconds.
++
+image::model-per-agent.png[Agent Model configuration section]
+
+=== Configure a model per agent programmatically
+
+Set the `llmModelEnabled` and `llmModel` fields on the agent's `AIAgentConfig`:
+
+[source,yaml]
+----
+apiVersion: ai.cattle.io/v1alpha1
+kind: AIAgentConfig
+metadata:
+  name: fleet
+  namespace: cattle-ai-agent-system
+spec:
+  authenticationType: RANCHER
+  builtIn: true
+  displayName: Rancher-Continuous-Delivery
+  enabled: true
+  mcpURL: rancher-mcp-server.cattle-ai-agent-system.svc
+  toolSet: fleet
+  llmModelEnabled: true
+  llmModel: "gemini-2.5-flash"
+----
+
+[NOTE]
+====
+When `llmModelEnabled` is `false` (the default), `llmModel` is ignored and the agent falls back to the model configured for the global AI provider. When `llmModelEnabled` is `true`, the value of `llmModel` must be a model supported by the currently configured provider.
+====
+
 [#bring-your-own-mcp]
 == Bring your own MCP
 
