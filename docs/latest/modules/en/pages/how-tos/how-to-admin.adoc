@@ -806,7 +806,7 @@ image::mcp-oauth2-settings-2.png[Homepage and Callback URL to register an OAuth2
 
 When a user sends a request that requires a tool from an OAuth2-protected MCP server, and no valid token is available (missing, invalid, or expired), {short-project-name} prompts the user to authenticate directly from the chat window. The user is guided through the OAuth2 login flow in a popup window, and once completed, the assistant automatically resumes the request.
 
-image::oauth2-chat.png[Liz chat prompting the user to authenticate via OAuth2]
+image::oauth2-chat.png[Liz chat prompting the user to authenticate via OAuth2, align="center",  width="50%"]
 
 Because OAuth2 access tokens are typically short-lived, you may be asked to authenticate again periodically; this is expected behavior.
 
