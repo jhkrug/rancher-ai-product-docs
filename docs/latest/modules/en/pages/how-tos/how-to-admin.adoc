@@ -740,7 +740,7 @@ Only the model can be overridden per agent. The provider (and its associated cre
 . Select the desired model from the **Model** field.
 . Click **Apply**. The agent will restart, which may take a few seconds.
 +
-image::model-per-agent.png[Agent Model configuration section]
+image::model-per-agent.png[Agent Model configuration section, width="50%", align="center"]
 
 === Configure a model per agent programmatically
 
