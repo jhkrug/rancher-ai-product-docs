@@ -240,6 +240,26 @@ activeLlm: "generic-openai"
 ----
 
 Update the chart:
+=== Configure a custom Bedrock endpoint
+
+If your environment doesn't have direct internet access to the default AWS
+Bedrock service endpoint (for example when using an AWS PrivateLink VPC
+endpoint, a proxy, or a non-standard regional endpoint), you can point the
+agent at a custom Bedrock URL by adding a `url` field under `awsBedrock` in
+the helm values:
+
+[source,yaml]
+----
+bedrockLlmModel: "global.anthropic.claude-opus-4-5-20251101-v1:0"
+activeLlm: "bedrock"
+awsBedrock:
+  bearerToken: "xxxxxxxx"
+  region: "us-east-1"
+  url: "https://vpce-xxxxxxxx.bedrock-runtime.us-east-1.vpce.amazonaws.com"
+----
+
+Update the chart:
+
 [source,bash,subs="attributes+"]
 ----
 helm upgrade --install --namespace cattle-ai-agent-system --create-namespace -f values.yaml rancher-ai-agent {oci-reg}
@@ -251,6 +271,10 @@ Restart the rancher-ai-agent:
 kubectl rollout restart deployment -n cattle-ai-agent-system rancher-ai-agent
 ----
 
+NOTE: The custom endpoint URL can currently only be set through the helm
+chart. It isn't exposed as a field in the ‘Global Settings’ -> ‘AI Assistant’
+UI form.
+
 [#multi-agent]
 == Multi Agent configuration
 
@@ -258,7 +282,7 @@ Extend {short-project-name}’s capabilities by configuring specialized AI Agent
 
 These agents allow {short-project-name} to handle specific domains such as GitOps, Cluster Provisioning areas (CAPI resources, K3k), Security and Observability.
 
-{short-project-name} Liz is deployed with 3 built-in AI agents by default:
+{short-project-name} is deployed with 3 built-in AI agents by default:
 
 * Rancher - the main Rancher Agent
 * Continuous Delivery - The GitOps specialist

@@ -194,7 +194,7 @@ Erweitern Sie die Fähigkeiten von {short-project-name} durch die Konfiguration 
 
 Diese Agenten ermöglichen es {short-project-name}, spezifische Bereiche wie GitOps, Clusterbereitstellungsbereiche (CAPI-Ressourcen, K3k), Sicherheit und Beobachtbarkeit zu bearbeiten. 
 
-{short-project-name} Liz wird standardmäßig mit 3 integrierten KI-Agenten bereitgestellt:
+{short-project-name} wird standardmäßig mit 3 integrierten KI-Agenten bereitgestellt:
 
 * Rancher - der Haupt-Rancher-Agent
 * Continuous Delivery - der GitOps-Spezialist
