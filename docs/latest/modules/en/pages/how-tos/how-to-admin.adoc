@@ -897,6 +897,34 @@ helm pull {oci-reg} --version 108.0.0+up1.0.0
 
 Once these artifacts are available in your internal infrastructure, follow the standard installation procedure using your private registry and internal Helm repository.
 
+[#http-proxy]
+== Configure a global HTTP proxy
+
+If your cluster requires outbound traffic to go through a proxy (for example in an air-gapped or restricted network), you can configure `HTTP_PROXY`, `HTTPS_PROXY`, and `NO_PROXY` globally for the AI agent and Rancher MCP server. This lets {short-project-name} reach external endpoints such as the OpenAI, Gemini, or AWS Bedrock APIs, as well as external MCP servers, from behind a proxy.
+
+To configure the proxy, update the `proxy` section in your `values.yaml`:
+
+[source,yaml]
+----
+proxy:
+  httpProxy: "http://proxy.example.com:3128"
+  httpsProxy: "http://proxy.example.com:3128"
+  noProxy: "localhost,127.0.0.1,.svc,.cluster.local"
+----
+
+Update the chart with the new configuration:
+
+[source,bash,subs="attributes+"]
+----
+helm upgrade --install --namespace cattle-ai-agent-system --create-namespace -f values.yaml rancher-ai-agent {oci-reg}
+----
+
+Restart the rancher-ai-agent:
+[source,bash,subs="attributes+"]
+----
+kubectl rollout restart deployment -n cattle-ai-agent-system rancher-ai-agent
+----
+
 [#ui-tools]
 == Managing UI Tools
 
