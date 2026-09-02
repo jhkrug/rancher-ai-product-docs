@@ -2,7 +2,7 @@ include::partial$variables.adoc[]
 
 = How-tos for the Administrator of {project-name}
 :page-languages: [en, de, es, fr, ja, pt, zh]
-:revdate: 2026-06-09
+:revdate: 2026-09-02
 :page-revdate: {revdate}
 :description: How-tos for the administrator of {project-name}.
 
@@ -449,7 +449,7 @@ The **Application Collection Agent** helps you discover hardened, secure images 
 2.  **Navigate to Settings:** Go to **Global Settings** > **AI Assistant**.
 3.  **Add Agent:** Click **Add AI Agent** and input the following:
 
-image:ai-agent-suse-appco.png[SUSE Application Collection AI Agent]
+image::ai-agent-suse-appco.png[SUSE Application Collection AI Agent]
 
 Use the following settings:
 
@@ -530,17 +530,18 @@ The **SUSE-Observability** agent helps you gather metrics, traces, and logs from
 
 **Pre-requisites:**
 
-1. link:https://documentation.suse.com/cloudnative/suse-observability/latest/en/advanced/ai-assistant.html[SUSE-Observability] deployed with MCP server enabled
-
+* link:https://documentation.suse.com/cloudnative/suse-observability/latest/en/advanced/ai-assistant.html[SUSE-Observability] deployed with MCP server enabled
++
 [NOTE]
 =====
-If SUSE Observability is running behind a self managed certificate, please use the programmatic Installation and use `caBundleRef` to load the custom CA bundle see xref:how-tos/how-to-admin.adoc#mcp-trust-custom-cert[MCP with custom certs] for more details. 
+If SUSE Observability is running behind a self managed certificate, please use the programmatic Installation and use `caBundleRef` to load the custom CA bundle see xref:how-tos/how-to-admin.adoc#mcp-trust-custom-cert[MCP with custom certs] for more details.
 =====
 
 **Configuration Steps:**
 
-1.  **Generate a token:** Visit the link:https://documentation.suse.com/cloudnative/suse-observability/latest/en/use/ai-assistant/mcp-server.html[SUSE Observability MCP] page to generate the token and get the `mcp` endpoint.
-2. Create a secret in the **local** cluster using the token from step 1.
+.  **Generate a token:** Visit the link:https://documentation.suse.com/cloudnative/suse-observability/latest/en/use/ai-assistant/mcp-server.html[SUSE Observability MCP] page to generate the token and get the `mcp` endpoint.
+. Create a secret in the **local** cluster using the token from step 1.
++
 [source,bash]
 ----
 # For an API-token type of token
@@ -548,12 +549,13 @@ kubectl create secret generic suse-obs-auth   --namespace cattle-ai-agent-system
 # For an Service-token type of token
 kubectl create secret generic suse-obs-auth   --namespace cattle-ai-agent-system   --from-literal=X-API-Key="svctok-..."
 ----
-3.  **Navigate to Settings:** Go to **Global Settings** > **AI Assistant**.
-4.  **Add Agent:** Click **Add AI Agent** and input the following:
++
+.  **Navigate to Settings:** Go to **Global Settings** > **AI Assistant**.
+.  **Add Agent:** Click **Add AI Agent** and input the following:
 
-image:ai-agent-suse-observability.png[SUSE Observability AI Agent]
+image::ai-agent-suse-observability.png[SUSE Observability AI Agent]
 
-Use the following settings: 
+Use the following settings:
 [cols="1,3"]
 |===
 | Setting | Value
@@ -562,8 +564,8 @@ Use the following settings:
 | **Auth Type** | `Custom Headers authentication`
 | **Secret** | Select the secret created in Step 2.
 | **Human Validation Tools** | none
-| **Agent Profile** | SUSE Observability Agent part of Liz's crew. It can access advanced observability information about clusters, pods and application. Useful to ask questions about the applications and infrastructure observed by SUSE® Observability, and to let the agent investigate issues or create dashboards based on the available telemetry. 
-Example of prompts: 
+| **Agent Profile** | SUSE Observability Agent part of Liz's crew. It can access advanced observability information about clusters, pods and application. Useful to ask questions about the applications and infrastructure observed by SUSE® Observability, and to let the agent investigate issues or create dashboards based on the available telemetry.
+Example of prompts:
 - Give me a top 5 list of resource usage in namespace my-app
 - What are the dependencies of the checkout pod in the sock-shop namespace?
 - Is there anything in a critical state?
@@ -642,7 +644,7 @@ spec:
   systemPrompt: "# SUSE Observability Troubleshooting Guide for AI Agents\n    You
     have access to a SUSE Observability MCP server that provides tools to investigate
     Kubernetes infrastructure issues. Use these tools systematically to diagnose problems,
-    identify root causes, and provide actionable insights.\n## Best Practices\n 
+    identify root causes, and provide actionable insights.\n## Best Practices\n
     ### Query Efficiency\n    - **Always filter by namespace or
     domain** when investigating specific environments\n    - **Use comma-separated
     values** for multiple items: `healthstates: 'CRITICAL,DEVIATING'` instead of separate
@@ -687,7 +689,7 @@ Follow the instruction defined on the offical SBOMscanner link:https://github.co
 
 [NOTE]
 =====
-The SBOMScanner MCP server can be started with `TLS`, please use the programmatic Installation and use `caBundleRef` to load the custom CA bundle see xref:how-tos/how-to-admin.adoc#mcp-trust-custom-cert[MCP with custom certs] for more details. 
+The SBOMScanner MCP server can be started with `TLS`, please use the programmatic Installation and use `caBundleRef` to load the custom CA bundle see xref:how-tos/how-to-admin.adoc#mcp-trust-custom-cert[MCP with custom certs] for more details.
 =====
 --
 CloudCasa::
@@ -860,16 +862,16 @@ See xref:how-tos/how-to-admin.adoc#multi-agent[Multi-Agent Configuration] for ex
 
 If your MCP server is running with a self-signed certificate, you can trust it using the following steps.
 
-1. Create a secret in the **local** cluster
-
+. Create a secret in the **local** cluster
++
 [source,bash]
 ----
  kubectl create secret generic suse-obs-ca \
   --namespace cattle-ai-agent-system \
   --from-file=ca.crt=stackstate-ca.crt
 ----
-2. Then configure programmatically the **AIAgentConfig** with `caBundleRef`
-
+. Then configure programmatically the **AIAgentConfig** with `caBundleRef`
++
 [source,yaml]
 ----
 apiVersion: ai.cattle.io/v1alpha1
