@@ -794,7 +794,8 @@ If you are using Server-Sent Events (SSE), please switch to a streamable HTTP co
 | **Agent Profile** | A clear summary of the Agent's purpose. **Include example prompts**, as {short-project-name} uses this description to route user requests to the correct Agent.
 | **Endpoint** | The accessible URL of your MCP server +
 **Note**: The server must support Streamable HTTP.
-| **Authentication Type** | Choose between **Rancher Authentication** (internal), **Basic Authentication**, or **None**. _(OAuth2 support coming soon)._
+| **Authentication Type** | Choose the authentication method used to reach your MCP server: **Rancher Authentication** (internal), **Basic Authentication**, **OAuth2 authentication**, **Custom Headers authentication**, or **None**. +
+See xref:how-tos/how-to-admin.adoc#mcp-oauth2[Configure OAuth2 authentication] and xref:how-tos/how-to-admin.adoc#mcp-custom-headers[Configure Custom Headers authentication] for details.
 | **Human Validation Tools** | Select specific tools that require explicit user confirmation before {short-project-name} executes them.
 | **Guidelines** | Provide the system prompt (instructions) for the agent. +
 See xref:how-tos/how-to-admin.adoc#multi-agent[Multi-Agent Configuration] for examples.
@@ -831,6 +832,110 @@ spec:
   caBundleRef:
     name: suse-obs-ca
     key: ca.crt
+----
+
+[#mcp-oauth2]
+== Configure OAuth2 authentication for an MCP server
+
+{short-project-name} supports OAuth2 authentication for external MCP/Agent connections, following the MCP link:https://modelcontextprotocol.io/specification/draft/basic/authorization[Authorization specification]. This lets {short-project-name} negotiate short-lived access tokens with an external MCP server or third-party OAuth2 provider (for example GitHub or Notion), instead of relying on long-lived static credentials.
+
+**Configuration Steps:**
+
+1. Navigate to **Global Settings** > **AI Assistant**.
+2. Scroll to the **AI Agents** section, and select (or create) an Agent.
+3. Set the **Authentication Type** to **OAuth2 authentication**.
+4. {short-project-name} tries to automatically discover the **Metadata endpoint** and supported **Scopes** based on the **MCP Endpoint** URL. If discovery fails, enter the **Metadata endpoint** manually, and optionally the **Scopes**, separated by whitespace.
+5. {short-project-name} then tries to automatically discover the client registration details from the **Metadata endpoint**. If the OAuth2 provider does not support Dynamic Client Registration, manually enter the **Client ID** and **Client Secret** issued by the OAuth2 provider.
+6. Optionally provide a **CA Bundle** if the OAuth2 provider or MCP server uses a self-signed certificate. See xref:how-tos/how-to-admin.adoc#mcp-trust-custom-cert[MCP with custom certs] for more details.
+7. Click on **Apply** to save the configuration.
+
+image::mcp-oauth2-settings.png[OAuth2 authentication settings for an AI Agent]
+
+Some OAuth2 providers require you to register {short-project-name} as an OAuth application (client) beforehand, and to provide it with a homepage and callback URL. These values are displayed in the Agent configuration form so you can copy them into the provider's OAuth application settings.
+
+image::mcp-oauth2-settings-2.png[Homepage and Callback URL to register an OAuth2 application]
+
+=== Authenticating from the chat
+
+When a user sends a request that requires a tool from an OAuth2-protected MCP server, and no valid token is available (missing, invalid, or expired), {short-project-name} prompts the user to authenticate directly from the chat window. The user is guided through the OAuth2 login flow in a popup window, and once completed, the assistant automatically resumes the request.
+
+image::oauth2-chat.png[Liz chat prompting the user to authenticate via OAuth2, align="center",  width="50%"]
+
+Because OAuth2 access tokens are typically short-lived, you may be asked to authenticate again periodically; this is expected behavior.
+
+=== Programmatic Installation
+
+Alternatively, you can configure OAuth2 authentication by creating a secret and referencing it from an `AIAgentConfig`.
+
+1. Create a secret in the **local** cluster with the OAuth2 client details:
++
+[source,bash]
+----
+kubectl create secret generic github-oauth-auth \
+  --namespace cattle-ai-agent-system \
+  --from-literal=clientID="..." \
+  --from-literal=clientSecret="..." \
+  --from-literal=metadata_endpoint="https://api.githubcopilot.com/.well-known/oauth-protected-resource/mcp/" \
+  --from-literal=scope="..."
+----
+2. Reference the secret from the `AIAgentConfig` with `authenticationType: OAUTH2`:
++
+[source,yaml]
+----
+apiVersion: ai.cattle.io/v1alpha1
+kind: AIAgentConfig
+metadata:
+  name: github-agent
+  namespace: cattle-ai-agent-system
+spec:
+  displayName: GitHub
+  enabled: true
+  mcpURL: https://api.githubcopilot.com/mcp
+  authenticationType: OAUTH2
+  authenticationSecret: github-oauth-auth
+----
+
+[#mcp-custom-headers]
+== Configure Custom Headers authentication for an MCP server
+
+Some external MCP servers (for example SUSE Observability) authenticate requests using one or more custom HTTP headers, such as an API key or token, rather than OAuth2 or Basic Authentication. {short-project-name} supports referencing a Kubernetes secret containing these headers.
+
+**Configuration Steps:**
+
+1. Create a secret in the **local** cluster with one entry per header to inject. Each secret key is used as the HTTP header name, and its value is sent as the header value.
++
+[source,bash]
+----
+kubectl create secret generic my-mcp-auth \
+  --namespace cattle-ai-agent-system \
+  --from-literal=X-API-Key="..."
+----
+2. Navigate to **Global Settings** > **AI Assistant**.
+3. Scroll to the **AI Agents** section, and select (or create) an Agent.
+4. Set the **Authentication Type** to **Custom Headers authentication**.
+5. Select the secret created in Step 1 from the **Secret** dropdown.
+6. Optionally provide a **CA Bundle** if the MCP server uses a self-signed certificate. See xref:how-tos/how-to-admin.adoc#mcp-trust-custom-cert[MCP with custom certs] for more details.
+7. Click on **Apply** to save the configuration.
+
+image::mcp-custom-headers.png[Custom Headers authentication settings for an AI Agent]
+
+=== Programmatic Installation
+
+Alternatively, apply an `AIAgentConfig` referencing the header secret with `authenticationType: HEADER`:
+
+[source,yaml]
+----
+apiVersion: ai.cattle.io/v1alpha1
+kind: AIAgentConfig
+metadata:
+  name: my-mcp-agent
+  namespace: cattle-ai-agent-system
+spec:
+  displayName: My MCP Agent
+  enabled: true
+  mcpURL: https://mcp.example.com/mcp
+  authenticationType: HEADER
+  authenticationSecret: my-mcp-auth
 ----
 
 [#rbac]
