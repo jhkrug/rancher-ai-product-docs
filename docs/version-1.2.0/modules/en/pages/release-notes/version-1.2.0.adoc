@@ -1,0 +1,15 @@
+include::partial$variables.adoc[]
+
+= {project-name} v1.2.0 Release Highlights
+:revdate: 2026-09-04
+:page-revdate: {revdate}
+
+== New Features
+
+== Core Improvements
+
+== Bug Fixes & Security
+
+NOTE: This page highlights the most significant changes in this release and is not an exhaustive changelog.
+
+Full Changelogs: link:https://github.com/rancher/rancher-ai-agent[rancher-ai-agent] | link:https://github.com/rancher/rancher-ai-ui[rancher-ai-ui] | link:https://github.com/rancher/rancher-ai-mcp[rancher-ai-mcp]
